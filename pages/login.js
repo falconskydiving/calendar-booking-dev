@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router';
-// import * as auth0 from 'auth0-js';
+import Link from 'next/link'
 import { WebAuth } from 'auth0-js';
 
 
@@ -9,10 +9,9 @@ import tw from "tailwind-styled-components"
 import Layout from '../components/account/layout'
 
 export default function Login() {
-    // const router = useRouter();    
+    // const router = useRouter();
     useEffect(() => {
-        console.log(" --- start");       
-        
+        console.log(" --- start");
     })
     
     const [loginError, setLoginError] = useState('');
@@ -21,6 +20,7 @@ export default function Login() {
 
     const webAuth = new WebAuth({
         domain:         process.env.NEXT_PUBLIC_AUTO0_CUSTOM_DOMAIN,
+        // domain:         process.env.NEXT_PUBLIC_AUTH0_DOMAIN,
         clientID:       process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID
     });
 
@@ -31,7 +31,7 @@ export default function Login() {
             username:       email,
             password:       password,
             responseType:   'id_token',
-            redirectUri:    process.env.NEXT_PUBLIC_BASE_URL + 'dashboard/'
+            redirectUri:    process.env.NEXT_PUBLIC_BASE_URL + 'admin/dashboard/'
         }, function (err,res) {
             // handle errors or continue
             setLoginError(err.description)
@@ -44,7 +44,7 @@ export default function Login() {
             webAuth.authorize({
                 connection: connectionType,
                 responseType:   'id_token',
-                redirectUri:    process.env.NEXT_PUBLIC_BASE_URL + 'dashboard/'
+                redirectUri:    process.env.NEXT_PUBLIC_BASE_URL + 'admin/dashboard/'
             }, function (err,res) {
                 // handle errors or continue
                 setLoginError(err.description)
@@ -68,10 +68,12 @@ export default function Login() {
         <Layout>
             <Container>
                 <TitleContainer>
-                    <LogoImage
-                        src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-                        alt="Workflow"
-                    />
+                    <Link href="/">
+                        <LogoImage
+                            src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
+                            alt="Workflow"
+                        />
+                    </Link>
                     <Title>Sign in to your account</Title>
                     <TrialLinkWrapper>
                         Or{' '}
@@ -209,7 +211,7 @@ const TitleContainer = tw.div`
 `
 
 const LogoImage = tw.img`
-    mx-auto h-12 w-auto
+    mx-auto h-12 w-auto cursor-pointer
 `
 
 const Title = tw.h2`
