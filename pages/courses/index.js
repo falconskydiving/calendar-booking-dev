@@ -661,7 +661,7 @@ export default function Booking() {
                 <button
                   // type="submit"
                   type="button"
-                  className="mt-3.5 w-full bg-black border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-opacity-80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  className="mt-3.5 w-full bg-black border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                   onClick={() => router.push('/checkout')}
                 >
                   Book a spot
@@ -683,7 +683,7 @@ export default function Booking() {
               </div>
             </div>
           </div>
-          
+
           <div className="lg:col-span-2 lg:pr-8">
             <div className="flex flex-col font-inter pt-10 pb-8">
               <h1 className="text-xl font-semibold tracking-tight text-black sm:text-xl">
