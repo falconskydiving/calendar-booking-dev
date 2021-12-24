@@ -2,6 +2,13 @@ import Image from 'next/image'
 import { ArrowLeftIcon } from '@heroicons/react/solid'
 import { DeviceMobileIcon, CalendarIcon, MailIcon } from '@heroicons/react/outline'
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
+import { Children } from 'react'
+
+interface CustomerDetails {
+  type: string;
+  name: string;
+  value?: string | string[];
+};
 
 const course = {
     id: 1,
@@ -14,7 +21,7 @@ const course = {
     imageAlt: '',
 }
 
-const customer_details = [
+const customer_details: Array<CustomerDetails> = [
   {
     type: "contact",
     name: "Email",
@@ -58,7 +65,7 @@ export default function Thankyou() {
       defaultZoom={8}
       defaultCenter={{ lat: -34.397, lng: 150.644 }}
     >
-      {props.isMarkerShown && <Marker position={{ lat: -34.397, lng: 150.644 }} />}
+      <Marker position={{ lat: -34.397, lng: 150.644 }} />
     </GoogleMap>
   ))
 
@@ -135,18 +142,17 @@ export default function Thankyou() {
                 <div className="mt-1 bg-white rounded-md shadow-md -space-y-px overflow-hidden border-[#b0b0b0] border">
                   <div>
                     <MyMapComponent
-                      isMarkerShown
                       googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
                       loadingElement={<div style={{ height: `100%` }} />}
                       containerElement={<div style={{ height: `220px` }} />}
                       mapElement={<div style={{ height: `100%` }} />}
                     />
                   </div>
-                  <div className="p-5">
-                    <p>
+                  <div className="p-5 text-black">
+                    <p className="font-semibold text-sm">
                       Your registration has been confirmed
                     </p>
-                    <p>
+                    <p className="font-normal text-xs pt-1">
                       You will soon receive a confirmation by email, along with your order number.
                     </p>
                   </div>
@@ -232,9 +238,13 @@ export default function Thankyou() {
                         <div>
                           <dt className="mt-4 mb-1 font-semibold black">{detail.name}</dt>
                           <dd className="text-black">
-                            {detail.value.map((address) => (
-                              <div>{address}</div>
-                            ))}  
+                            {
+                              Children.map(detail.value, (address) => {
+                                return (
+                                  <div>{address}</div>
+                                )                                
+                              })
+                            }
                           </dd>
                         </div>
                       ))}
@@ -243,7 +253,7 @@ export default function Thankyou() {
                 </div>
               </div>
 
-              <div className="mb-20 border border-[#b0b0b0] rounded-md">
+              <div className="mb-8 lg:mb-20 border border-[#b0b0b0] rounded-md">
                 <div className="px-4 py-5 sm:p-6">
                   <h3 className="text-sm leading-6 font-semibold text-black">Add to your calendar</h3>
                   <div className="mt-1 max-w-xl text-xs text-black">
@@ -264,7 +274,7 @@ export default function Thankyou() {
               </div>
 
               <div className="flex flex-col lg:flex-row items-center gap-8">
-                <a href="#" className="flex flex-row items-center">
+                <a href="#" className="flex flex-row items-center order-2 lg:order-1">
                   <ArrowLeftIcon
                     className='text-black h-4 w-4 mt-0'
                     aria-hidden="true"
@@ -275,7 +285,7 @@ export default function Thankyou() {
                 </a>
                 <button
                   type="button"
-                  className="inline-flex items-center justify-center px-5 py-2 border border-transparent font-medium rounded-md text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:text-sm"
+                  className="inline-flex items-center justify-center px-5 py-2 border border-transparent font-medium rounded-md text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:text-sm order-1 lg:order-2"
                 >
                   <MailIcon
                     className='text-white h-7 w-7'
